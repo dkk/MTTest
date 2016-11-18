@@ -10,39 +10,54 @@ import UIKit
 
 class StartViewController: UIViewController, MenuDelegate {
     @IBOutlet weak var webView: UIWebView!
-    @IBOutlet weak var closeButton: UIBarButtonItem!
+
+    var webNavigationStack = [URL]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        loadInitialPage()
+        if let url = URL(string: "https://www.mytoys.de") {
+            webNavigationStack = [url]
+            loadLastUrl()
+        }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "openMenu" {
-            if let destination = segue.destination as? MenuTableViewController {
-                destination.delegate = self
+            if let destination = segue.destination as? MenuNavigationController {
+                let menuPresenter = MenuPresenter(view: destination, service: MenuNetworkService())
+                menuPresenter.delegate = self
+                destination.presenter = menuPresenter
             }
         }
     }
 
-    func loadInitialPage() {
-        if let url = URL(string: "https://www.mytoys.de") {
-            webView.loadRequest(URLRequest(url: url))
-        }
+    private func loadLastUrl() {
+        guard let lastUrl = webNavigationStack.last else { return }
+
+        webView.loadRequest(URLRequest(url: lastUrl))
     }
 
     //MARK: - NavigationBar actions
 
     @IBAction func close(_ sender: Any) {
-        navigationItem .setRightBarButton(nil, animated: true)
-        loadInitialPage()
+        guard webNavigationStack.count > 1 else { return }
+
+        webNavigationStack.removeLast()
+        if webNavigationStack.count <= 1 {
+            navigationItem.leftBarButtonItems?.remove(at: 0)
+        }
+        loadLastUrl()
     }
 
     //MARK: - MenuDelegate
 
     func linkTapped(url: URL) {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Close", style: .done, target: self, action: #selector(close))
+        if let leftBarItem = navigationItem.leftBarButtonItem, navigationItem.leftBarButtonItems!.count < 2 {
+            let backButton = UIBarButtonItem(title: "<", style: .done, target: self, action: #selector(close))
+            navigationItem.leftBarButtonItems = [backButton, leftBarItem]
+        }
+        webNavigationStack.append(url)
         webView.loadRequest(URLRequest(url: url))
     }
 }

@@ -36,7 +36,6 @@
                     </view>
                     <navigationItem key="navigationItem" title="MyToys" id="3PV-S5-NJp">
                         <barButtonItem key="leftBarButtonItem" title="Menu" id="f1e-4f-tf1">
-                            <color key="tintColor" red="0.0" green="0.12156862745098039" blue="0.3411764705882353" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <segue destination="pYZ-Ta-8DZ" kind="presentation" identifier="openMenu" id="hjt-aD-5hP"/>
                             </connections>
@@ -54,14 +53,14 @@
         <!--MyToys-->
         <scene sceneID="qHr-FJ-HGg">
             <objects>
-                <tableViewController id="PN9-We-ZU6" customClass="MenuTableViewController" customModule="MyToysTest" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="SA9-SO-0Ul">
+                <tableViewController storyboardIdentifier="menuTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="PN9-We-ZU6" customClass="MenuTableViewController" customModule="MyToysTest" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="SA9-SO-0Ul">
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="kJt-dG-Qtg">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="menuCell" id="kJt-dG-Qtg">
+                                <rect key="frame" x="0.0" y="56" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kJt-dG-Qtg" id="RgS-fx-MHu">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -86,10 +85,10 @@
             </objects>
             <point key="canvasLocation" x="1807" y="-519"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Menu Navigation Controller-->
         <scene sceneID="d7l-Fc-0tP">
             <objects>
-                <navigationController id="pYZ-Ta-8DZ" sceneMemberID="viewController">
+                <navigationController id="pYZ-Ta-8DZ" customClass="MenuNavigationController" customModule="MyToysTest" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="g8u-No-H9l">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
