@@ -6,10 +6,10 @@ target 'MyToysTest' do
   use_frameworks!
 
   # Pods for MyToysTest
-  
-  # Used for communication
-  ## https://github.com/Alamofire/Alamofire
-  pod 'Alamofire'
+
+  # used for communication and object mapping
+  ## https://github.com/tristanhimmelman/AlamofireObjectMapper
+  pod 'AlamofireObjectMapper'
 
   target 'MyToysTestTests' do
     inherit! :search_paths
