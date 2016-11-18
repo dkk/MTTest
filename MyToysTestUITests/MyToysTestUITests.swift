@@ -12,25 +12,51 @@ class MyToysTestUITests: XCTestCase {
         
     override func setUp() {
         super.setUp()
-        
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-        
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
-        // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
-        XCUIApplication().launch()
 
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+        continueAfterFailure = false
+        XCUIApplication().launch()
     }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
+
+    // This UI test will only work with network, and only as long as the menu elements don't change.
+    // usually you would use a Mock-Scheme for this kind of tests
+    func testStartPageAndMenu() {
+        let app = XCUIApplication()
+
+        //open the menu
+        app.navigationBars["MyToys"].buttons["Menu"].tap()
+
+        //navigate forward selecting nodes
+        let tablesQuery = app.tables
+        waitForElementToAppear(tablesQuery.staticTexts["Alter"])
+        tablesQuery.staticTexts["Alter"].tap()
+        tablesQuery.staticTexts["Baby & Kleinkind"].tap()
+
+        //navigate back (test back button)
+        app.navigationBars["Baby & Kleinkind"].buttons["Alter"].tap()
+        app.navigationBars["Alter"].buttons["myToys"].tap()
+
+        //close the menu
+        app.navigationBars["myToys"].buttons["Close"].tap()
+
+        // open the menu
+        let mytoysNavigationBar = app.navigationBars["MyToys"]
+        let menuButton = mytoysNavigationBar.buttons["Menu"]
+        menuButton.tap()
+
+        //select some links
+        waitForElementToAppear(tablesQuery.staticTexts["Alle Angebote im Überblick"])
+        tablesQuery.staticTexts["Alle Angebote im Überblick"].tap()
+        menuButton.tap()
+        waitForElementToAppear(tablesQuery.staticTexts["Kategorien"])
+        tablesQuery.staticTexts["Kategorien"].tap()
+        tablesQuery.staticTexts["Sport & Garten"].tap()
+        tablesQuery.staticTexts["Alles von Sport & Garten"].tap()
+        menuButton.tap()
+        waitForElementToAppear(tablesQuery.staticTexts["Artikel aus der Werbung"])
+        tablesQuery.staticTexts["Artikel aus der Werbung"].tap()
+
+        //go back two times
+        mytoysNavigationBar.buttons["<"].tap()
+        mytoysNavigationBar.buttons["<"].tap()
     }
-    
-    func testExample() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
 }
